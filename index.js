@@ -15,16 +15,12 @@ const defaultRange = {
 
 http.createServer(function (request, response) {
 	const { pathname } = new URL(request.url, `http://${request.headers.host}`);
-	console.log("Request received");
-	console.log(`Path name: ${pathname}`);
 
 	if (request.method !== 'POST') {
 		// Only acccept POST requests
-		// response.writeHead(405, {'Content-Type': 'text/plain'});
 		response.end(errorMessage);
 	} else if (pathname !== "/apps") {
 		// The API only has a single endpoint: /apps
-		// response.writeHead(404, {'Content-Type': 'text/html'});
 		response.end(errorMessage);
 	} else {
 		let body = "";
@@ -32,8 +28,6 @@ http.createServer(function (request, response) {
 			body += chunk;
 		});
 		request.on('end', () => {
-			console.log(`Body: ${body}`);
-
 			if (body) {
 				try {
 					body = JSON.parse(body);
@@ -45,15 +39,12 @@ http.createServer(function (request, response) {
 
 			// Send paginated apps response
 			if (typeof body !== "object" || !body.range) {
-				console.log("no range");
 				response.writeHead(200, { 'Content-Type': 'application/json' });
 				response.end(JSON.stringify(getPaginatedApps(apps)));
 			} else {
 				if (!body.range.by) {
-					console.log("no by");
 					response.end('Missing required valid "by" value in "range" query param');
 				} else {
-					console.log("by");
 					response.writeHead(200, { 'Content-Type': 'application/json' });
 					response.end(JSON.stringify(getPaginatedApps(apps, body.range)));
 				}
@@ -61,11 +52,11 @@ http.createServer(function (request, response) {
 
 		});
 	}
-}).listen(port, () => {
+}).listen(process.env.PORT || port, () => {
 	console.log(`Server running on port ${port}`);
 });
 
-/** Returns a subset of consecutive objects from `data` according to `range` */
+/** Returns a subset of consecutive objects from data according to range */
 const getPaginatedApps = (data, range) => {
 
 	// Select user-defined or default range parameters

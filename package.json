@@ -1,0 +1,23 @@
+{
+    "name": "MDLiveChallenge",
+    "version": "1.0.0",
+    "description": "1. Install the latest version [Node.js](https://nodejs.org/en/) and confirm the installation was successful:",
+    "main": "index.js",
+    "scripts": {
+      "start": "node index.js"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/mattjmanzo/MDLiveChallenge.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/mattjmanzo/MDLiveChallenge/issues"
+    },
+    "homepage": "https://github.com/mattjmanzo/MDLiveChallenge#readme",
+    "engines": {
+      "node": "14.15.4"
+    }
+}
